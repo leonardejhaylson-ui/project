@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
+
+  <title>Café com Leitura</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #2b1b12;
+      color: #f5e6d3;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px;
+      background: #5a3825;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    main {
+      padding: 30px;
+    }
+
+    .livro, .midia, .leitor {
+      background: #3b2418;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      width: 90%;
+      max-width: 900px;
+    }
+
+    .livro img, .midia img {
+      width: 100%;
+      max-width: 250px;
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    a {
+      color: #ffd28a;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: #fff0c9;
+    }
+
+    h2 {
+      color: #ffd28a;
+    }
+
+    iframe {
+      border: none;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    video, audio {
+      width: 100%;
+      max-width: 500px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>☕ Café Literário Digital</h1>
+    <p>Leia, assista e escute em um ambiente aconchegante.</p>
+  </header>
+
+  <main>
+
+    <!-- LIVROS -->
+    <section>
+      <h2>📚 Livros Digitais</h2>
+
+      <!-- LIVRO 1 -->
+      <div class="livro">
+        <img src="caida-por-voce-amy-lea_large.webp" alt="Caída Por Você">
+
+        <h3>💖 Caída Por Você</h3>
+
+        <p>
+          Romance leve e divertido com clima adolescente e enemies to lovers.
+        </p>
+
+        <a href="Caida Por Voce - Amy Lea.pdf" target="_blank">
+          📖 Abrir Livro
+        </a>
+      </div>
+
+      <!-- LIVRO 2 -->
+      <div class="livro">
+        <img src="81EE1CAUoEL.jpg" alt="Amor e Gelato">
+
+        <h3>🍦 Amor & Gelato</h3>
+
+        <p>
+          Uma viagem para a Itália, verão europeu e um romance adolescente fofo.
+        </p>
+
+        <a href="livros/amor-e-gelato.pdf" target="_blank">
+          📖 Abrir Livro
+        </a>
+      </div>
+
+      <!-- LIVRO 3 -->
+      <div class="livro">
+        <img src="a-barraca-do-beijo.jpg" alt="A Barraca do Beijo">
+
+        <h3>😘 A Barraca do Beijo</h3>
+
+        <p>
+          Romance colegial cheio de drama, amizade e paixão adolescente.
+        </p>
+
+        <a href="livros/a-barraca-do-beijo.pdf" target="_blank">
+          📖 Abrir Livro
+        </a>
+      </div>
+
+      <!-- LIVRO 4 -->
+      <div class="livro">
+        <img src="capa_paratodososgarotosquejaamei_g.jpg" alt="Para Todos os Garotos">
+
+        <h3>💌 Para Todos os Garotos que Já Amei</h3>
+
+        <p>
+          Cartas secretas, romance escolar e aquele clima clássico teen.
+        </p>
+
+        <a href="livros/para-todos-os-garotos.pdf" target="_blank">
+          📖 Abrir Livro
+        </a>
+      </div>
+
+    </section>
+
+    <!-- LEITOR PDF -->
+    <section>
+      <h2>📘 Leitor de PDF</h2>
+
+      <div class="leitor">
+        <p>Leia diretamente no site:</p>
+
+        <iframe
+          src="livros/caida-por-voce.pdf"
+          width="100%"
+          height="700px">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- MIDIAS -->
+    <section>
+      <h2>🎧 Mídias Digitais</h2>
+
+      <div class="midia">
+
+        <!-- VIDEO -->
+        <h3>🎥 Vídeo</h3>
+
+        <video controls>
+          <source src="midias/video.mp4" type="video/mp4">
+        </video>
+
+        <br><br>
+
+        <!-- AUDIO -->
+        <h3>🎵 Música / Podcast</h3>
+
+        <audio controls>
+          <source src="midias/audio.mp3" type="audio/mp3">
+        </audio>
+
+        <br><br><br>
+
+        <!-- AUDIOBOOK -->
+        <h3>📖 AudioBook</h3>
+
+        <img src="capa-audiobook.jpg" alt="Capa AudioBook">
+
+        <p>
+          Escute o audiobook diretamente no Café Literário.
+        </p>
+
+        <audio controls>
+          <source src="midias/audiobook.mp3" type="audio/mp3">
+        </audio>
+
+        <br><br>
+
+        <a href="midias/audiobook.mp3" download>
+          ⬇ Baixar AudioBook
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
