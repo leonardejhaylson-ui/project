@@ -2,210 +2,496 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
 
   <title>Café com Leitura</title>
 
   <style>
+    :root {
+      --cafe: #2b1b12;
+      --cafe-claro: #3b2418;
+      --caramelo: #ffd28a;
+      --creme: #f5e6d3;
+      --rose: #ffb6a3;
+      --sombra: 0 18px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #2b1b12;
-      color: #f5e6d3;
+      background:
+        radial-gradient(circle at top left, rgba(255, 210, 138, 0.18), transparent 35%),
+        linear-gradient(135deg, #24120c 0%, var(--cafe) 55%, #4a2b1b 100%);
+      color: var(--creme);
+      min-height: 100vh;
     }
 
     header {
       text-align: center;
-      padding: 40px;
-      background: #5a3825;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      padding: 56px 24px 44px;
+      background: rgba(90, 56, 37, 0.78);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin: 0 0 12px;
+    }
+
+    header p {
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 1.6;
     }
 
     main {
-      padding: 30px;
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
     }
 
-    .livro, .midia, .leitor {
-      background: #3b2418;
+    section {
+      margin-bottom: 34px;
+    }
+
+    h2, h3 {
+      color: var(--caramelo);
+    }
+
+    .painel, .livro, .midia, .leitor {
+      background: rgba(59, 36, 24, 0.9);
+      border: 1px solid rgba(255, 210, 138, 0.16);
+      border-radius: 18px;
+      box-shadow: var(--sombra);
+    }
+
+    .painel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
       padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      width: 90%;
-      max-width: 900px;
+    }
+
+    .dica {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .dica strong {
+      color: var(--rose);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .controles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin: 18px 0;
+    }
+
+    .campo-busca, .botao, select {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-size: 1rem;
+    }
+
+    .campo-busca, select {
+      min-width: min(100%, 260px);
+      background: #fff8ed;
+      color: #2b1b12;
+    }
+
+    .botao, a.botao {
+      cursor: pointer;
+      background: var(--caramelo);
+      color: #2b1b12;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .botao:hover, a.botao:hover {
+      transform: translateY(-2px);
+      background: #fff0c9;
+      color: #2b1b12;
+    }
+
+    .grade-livros {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .livro {
+      display: flex;
+      flex-direction: column;
+      padding: 18px;
+      min-height: 100%;
     }
 
     .livro img, .midia img {
       width: 100%;
-      max-width: 250px;
-      border-radius: 8px;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 14px;
       display: block;
       margin-bottom: 15px;
     }
 
-    a {
-      color: #ffd28a;
-      text-decoration: none;
-      font-weight: bold;
+    .livro p, .midia p, .leitor p, .dica p {
+      line-height: 1.55;
     }
 
-    a:hover {
-      color: #fff0c9;
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
     }
 
-    h2 {
-      color: #ffd28a;
+    .tag {
+      background: rgba(255, 210, 138, 0.14);
+      color: #ffe4ad;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.86rem;
+    }
+
+    .acoes-livro {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .acoes-livro .botao {
+      flex: 1 1 130px;
+    }
+
+    .leitor {
+      padding: 20px;
+    }
+
+    .leitor-topo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    #titulo-leitor {
+      margin: 0;
+      color: var(--rose);
     }
 
     iframe {
       border: none;
-      border-radius: 10px;
+      border-radius: 14px;
       margin-top: 15px;
+      width: 100%;
+      height: min(78vh, 760px);
+      background: #fff;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .checklist label {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .midia {
+      padding: 20px;
     }
 
     video, audio {
       width: 100%;
-      max-width: 500px;
+      max-width: 580px;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    body.modo-leitura {
+      background: #f7ead8;
+      color: #2b1b12;
+    }
+
+    body.modo-leitura header,
+    body.modo-leitura .painel,
+    body.modo-leitura .livro,
+    body.modo-leitura .leitor,
+    body.modo-leitura .midia {
+      background: #fff8ed;
+      color: #2b1b12;
+    }
+
+    body.modo-leitura h2,
+    body.modo-leitura h3,
+    body.modo-leitura #titulo-leitor {
+      color: #7a3f1e;
+    }
+
+    body.modo-leitura .tag,
+    body.modo-leitura .dica,
+    body.modo-leitura .checklist label {
+      background: #f3dfc4;
+      color: #5a3825;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 38px 18px 32px;
+      }
+
+      .controles, .leitor-topo, .acoes-livro {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .campo-busca, select, .botao {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
-
   <header>
     <h1>☕ Café Literário Digital</h1>
-    <p>Leia, assista e escute em um ambiente aconchegante.</p>
+    <p>Escolha o livro pelo clima do dia, abra no leitor do site e acompanhe sua leitura com pequenas metas.</p>
   </header>
 
   <main>
-
-    <!-- LIVROS -->
-    <section>
-      <h2>📚 Livros Digitais</h2>
-
-      <!-- LIVRO 1 -->
-      <div class="livro">
-        <img src="caida-por-voce-amy-lea_large.webp" alt="Caída Por Você">
-
-        <h3>💖 Caída Por Você</h3>
-
-        <p>
-          Romance leve e divertido com clima adolescente e enemies to lovers.
-        </p>
-
-        <a href="Caida Por Voce - Amy Lea.pdf" target="_blank">
-          📖 Abrir Livro
-        </a>
+    <section aria-labelledby="rotina-title">
+      <h2 id="rotina-title">✨ Cantinho rápido de leitura</h2>
+      <div class="painel">
+        <div class="dica">
+          <strong>1. Escolha seu clima</strong>
+          <p>Use os filtros para encontrar uma leitura fofa, divertida ou cheia de drama.</p>
+        </div>
+        <div class="dica">
+          <strong>2. Prepare o café</strong>
+          <p>Clique no timer de 15 minutos para uma sessão curta, prática e sem pressão.</p>
+        </div>
+        <div class="dica">
+          <strong>3. Marque o progresso</strong>
+          <p>Use a checklist para transformar a leitura em passos simples.</p>
+        </div>
       </div>
-
-      <!-- LIVRO 2 -->
-      <div class="livro">
-        <img src="81EE1CAUoEL.jpg" alt="Amor e Gelato">
-
-        <h3>🍦 Amor & Gelato</h3>
-
-        <p>
-          Uma viagem para a Itália, verão europeu e um romance adolescente fofo.
-        </p>
-
-        <a href="livros/amor-e-gelato.pdf" target="_blank">
-          📖 Abrir Livro
-        </a>
-      </div>
-
-      <!-- LIVRO 3 -->
-      <div class="livro">
-        <img src="a-barraca-do-beijo.jpg" alt="A Barraca do Beijo">
-
-        <h3>😘 A Barraca do Beijo</h3>
-
-        <p>
-          Romance colegial cheio de drama, amizade e paixão adolescente.
-        </p>
-
-        <a href="livros/a-barraca-do-beijo.pdf" target="_blank">
-          📖 Abrir Livro
-        </a>
-      </div>
-
-      <!-- LIVRO 4 -->
-      <div class="livro">
-        <img src="capa_paratodososgarotosquejaamei_g.jpg" alt="Para Todos os Garotos">
-
-        <h3>💌 Para Todos os Garotos que Já Amei</h3>
-
-        <p>
-          Cartas secretas, romance escolar e aquele clima clássico teen.
-        </p>
-
-        <a href="livros/para-todos-os-garotos.pdf" target="_blank">
-          📖 Abrir Livro
-        </a>
-      </div>
-
     </section>
 
-    <!-- LEITOR PDF -->
-    <section>
-      <h2>📘 Leitor de PDF</h2>
+    <section aria-labelledby="livros-title">
+      <h2 id="livros-title">📚 Livros Digitais</h2>
+
+      <div class="controles" aria-label="Controles dos livros">
+        <input class="campo-busca" id="busca" type="search" placeholder="Buscar por título ou clima..." aria-label="Buscar livros">
+        <select id="filtro-genero" aria-label="Filtrar por gênero">
+          <option value="todos">Todos os climas</option>
+          <option value="romance">Romance</option>
+          <option value="fofo">Fofo</option>
+          <option value="drama">Drama</option>
+          <option value="viagem">Viagem</option>
+        </select>
+        <button class="botao" id="timer-cafe" type="button">☕ Começar 15 min</button>
+        <button class="botao" id="modo-leitura" type="button">🌙 Modo leitura</button>
+      </div>
+
+      <div class="grade-livros" id="lista-livros">
+        <article class="livro" data-titulo="Caída Por Você" data-tags="romance fofo enemies to lovers divertido" data-pdf="Caida Por Voce - Amy Lea.pdf">
+          <img src="caida-por-voce-amy-lea_large.webp" alt="Capa do livro Caída Por Você">
+          <h3>💖 Caída Por Você</h3>
+          <div class="meta">
+            <span class="tag">romance</span>
+            <span class="tag">enemies to lovers</span>
+            <span class="tag">leve</span>
+          </div>
+          <p>Romance leve e divertido, perfeito para ler aos poucos com um café quentinho.</p>
+          <div class="acoes-livro">
+            <button class="botao abrir-leitor" type="button">📘 Ler no site</button>
+            <a class="botao" href="Caida Por Voce - Amy Lea.pdf" target="_blank" rel="noopener">📖 Abrir PDF</a>
+          </div>
+        </article>
+
+        <article class="livro" data-titulo="Amor e Gelato" data-tags="romance fofo viagem italia verão" data-pdf="livros/amor-e-gelato.pdf">
+          <img src="81EE1CAUoEL.jpg" alt="Capa do livro Amor e Gelato">
+          <h3>🍦 Amor & Gelato</h3>
+          <div class="meta">
+            <span class="tag">viagem</span>
+            <span class="tag">fofo</span>
+            <span class="tag">verão</span>
+          </div>
+          <p>Uma viagem para a Itália, verão europeu e romance adolescente para relaxar.</p>
+          <div class="acoes-livro">
+            <button class="botao abrir-leitor" type="button">📘 Ler no site</button>
+            <a class="botao" href="livros/amor-e-gelato.pdf" target="_blank" rel="noopener">📖 Abrir PDF</a>
+          </div>
+        </article>
+
+        <article class="livro" data-titulo="A Barraca do Beijo" data-tags="romance drama amizade colegial paixão" data-pdf="livros/a-barraca-do-beijo.pdf">
+          <img src="a-barraca-do-beijo.jpg" alt="Capa do livro A Barraca do Beijo">
+          <h3>😘 A Barraca do Beijo</h3>
+          <div class="meta">
+            <span class="tag">drama</span>
+            <span class="tag">amizade</span>
+            <span class="tag">colegial</span>
+          </div>
+          <p>Romance colegial com amizade, escolhas difíceis e muita paixão adolescente.</p>
+          <div class="acoes-livro">
+            <button class="botao abrir-leitor" type="button">📘 Ler no site</button>
+            <a class="botao" href="livros/a-barraca-do-beijo.pdf" target="_blank" rel="noopener">📖 Abrir PDF</a>
+          </div>
+        </article>
+
+        <article class="livro" data-titulo="Para Todos os Garotos que Já Amei" data-tags="romance fofo cartas escolar teen" data-pdf="livros/para-todos-os-garotos.pdf">
+          <img src="capa_paratodososgarotosquejaamei_g.jpg" alt="Capa do livro Para Todos os Garotos que Já Amei">
+          <h3>💌 Para Todos os Garotos que Já Amei</h3>
+          <div class="meta">
+            <span class="tag">fofo</span>
+            <span class="tag">cartas</span>
+            <span class="tag">teen</span>
+          </div>
+          <p>Cartas secretas, romance escolar e aquele clima clássico para ler sem complicar.</p>
+          <div class="acoes-livro">
+            <button class="botao abrir-leitor" type="button">📘 Ler no site</button>
+            <a class="botao" href="livros/para-todos-os-garotos.pdf" target="_blank" rel="noopener">📖 Abrir PDF</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="leitor-title">
+      <h2 id="leitor-title">📘 Leitor prático de PDF</h2>
 
       <div class="leitor">
-        <p>Leia diretamente no site:</p>
+        <div class="leitor-topo">
+          <div>
+            <p>Livro selecionado:</p>
+            <h3 id="titulo-leitor">Caída Por Você</h3>
+          </div>
+          <a class="botao" id="baixar-atual" href="Caida Por Voce - Amy Lea.pdf" target="_blank" rel="noopener">↗ Abrir em nova aba</a>
+        </div>
 
-        <iframe
-          src="livros/caida-por-voce.pdf"
-          width="100%"
-          height="700px">
-        </iframe>
+        <div class="checklist" aria-label="Checklist de leitura">
+          <label><input type="checkbox"> Ler 10 páginas ou 15 minutos</label>
+          <label><input type="checkbox"> Anotar uma frase favorita</label>
+          <label><input type="checkbox"> Fazer uma pausa para café ou água</label>
+        </div>
+
+        <iframe id="leitor-pdf" src="Caida Por Voce - Amy Lea.pdf" title="Leitor de PDF"></iframe>
       </div>
     </section>
 
-    <!-- MIDIAS -->
-    <section>
-      <h2>🎧 Mídias Digitais</h2>
+    <section aria-labelledby="midias-title">
+      <h2 id="midias-title">🎧 Pausa com mídias digitais</h2>
 
       <div class="midia">
-
-        <!-- VIDEO -->
         <h3>🎥 Vídeo</h3>
-
+        <p>Use o vídeo como companhia para criar um clima aconchegante antes da leitura.</p>
         <video controls>
           <source src="midias/video.mp4" type="video/mp4">
         </video>
 
-        <br><br>
-
-        <!-- AUDIO -->
         <h3>🎵 Música / Podcast</h3>
-
+        <p>Coloque um áudio baixo para concentrar melhor enquanto lê.</p>
         <audio controls>
           <source src="midias/audio.mp3" type="audio/mp3">
         </audio>
 
-        <br><br><br>
-
-        <!-- AUDIOBOOK -->
         <h3>📖 AudioBook</h3>
-
-        <img src="capa-audiobook.jpg" alt="Capa AudioBook">
-
-        <p>
-          Escute o audiobook diretamente no Café Literário.
-        </p>
-
+        <img src="capa-audiobook.jpg" alt="Capa do audiobook">
+        <p>Escute o audiobook diretamente no Café Literário quando quiser descansar os olhos.</p>
         <audio controls>
           <source src="midias/audiobook.mp3" type="audio/mp3">
         </audio>
 
-        <br><br>
-
-        <a href="midias/audiobook.mp3" download>
-          ⬇ Baixar AudioBook
-        </a>
-
+        <p>
+          <a class="botao" href="midias/audiobook.mp3" download>⬇ Baixar AudioBook</a>
+        </p>
       </div>
     </section>
-
   </main>
 
+  <script>
+    const busca = document.querySelector('#busca');
+    const filtroGenero = document.querySelector('#filtro-genero');
+    const livros = document.querySelectorAll('.livro');
+    const tituloLeitor = document.querySelector('#titulo-leitor');
+    const leitorPdf = document.querySelector('#leitor-pdf');
+    const baixarAtual = document.querySelector('#baixar-atual');
+    const timerCafe = document.querySelector('#timer-cafe');
+    const modoLeitura = document.querySelector('#modo-leitura');
+
+    function filtrarLivros() {
+      const termo = busca.value.toLowerCase().trim();
+      const genero = filtroGenero.value;
+
+      livros.forEach((livro) => {
+        const texto = `${livro.dataset.titulo} ${livro.dataset.tags}`.toLowerCase();
+        const combinaBusca = texto.includes(termo);
+        const combinaGenero = genero === 'todos' || livro.dataset.tags.includes(genero);
+        livro.classList.toggle('oculto', !combinaBusca || !combinaGenero);
+      });
+    }
+
+    function abrirNoLeitor(livro) {
+      const titulo = livro.dataset.titulo;
+      const pdf = livro.dataset.pdf;
+
+      tituloLeitor.textContent = titulo;
+      leitorPdf.src = pdf;
+      baixarAtual.href = pdf;
+      document.querySelector('#leitor-title').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    busca.addEventListener('input', filtrarLivros);
+    filtroGenero.addEventListener('change', filtrarLivros);
+
+    document.querySelectorAll('.abrir-leitor').forEach((botao) => {
+      botao.addEventListener('click', () => abrirNoLeitor(botao.closest('.livro')));
+    });
+
+    timerCafe.addEventListener('click', () => {
+      timerCafe.disabled = true;
+      timerCafe.textContent = '☕ Sessão iniciada!';
+
+      setTimeout(() => {
+        timerCafe.disabled = false;
+        timerCafe.textContent = '✅ Hora da pausa!';
+      }, 15 * 60 * 1000);
+    });
+
+    modoLeitura.addEventListener('click', () => {
+      document.body.classList.toggle('modo-leitura');
+      modoLeitura.textContent = document.body.classList.contains('modo-leitura')
+        ? '☀️ Modo café'
+        : '🌙 Modo leitura';
+    });
+  </script>
 </body>
 </html>
