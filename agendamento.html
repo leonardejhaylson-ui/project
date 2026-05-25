@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Agendamento | Barbearia Império</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+<header class="header"><div class="container nav-wrap"><a class="brand" href="index.html">Barbearia <span>Império</span></a><nav><a href="index.html">Home</a><a href="servicos.html">Serviços</a><a href="loja.html">Loja</a><a href="sobre.html">Sobre</a></nav></div></header>
+<main class="section"><div class="container"><h1>Agende seu horário</h1>
+<form id="booking-form" class="form">
+<label>Nome<input required name="name" type="text"></label>
+<label>Telefone<input required name="phone" type="tel" placeholder="(11) 99999-9999"></label>
+<label>Serviço
+<select name="service" required>
+<option value="">Selecione</option><option>Corte Premium</option><option>Barba Clássica</option><option>Combo Império</option>
+</select>
+</label>
+<label>Data<input required name="date" type="date"></label>
+<label>Horário
+<select name="time" required>
+<option value="">Selecione</option><option>09:00</option><option>10:00</option><option>11:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option>18:00</option>
+</select></label>
+<button class="btn btn-primary" type="submit">Confirmar Agendamento</button>
+</form>
+<p id="booking-result" class="result"></p>
+</div></main>
+<a class="whatsapp-float" href="https://wa.me/5511999999999" target="_blank" rel="noopener">WhatsApp</a>
+<script src="script.js"></script>
+</body>
+</html>
